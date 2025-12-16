@@ -1,0 +1,25 @@
+name: rapllm
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10
+  - ffmpeg
+  - yt-dlp
+  - numpy
+  - tiktoken
+  - requests
+  - soundfile
+
+  - pip
+  - pip:
+      - openai-whisper
+      - openai
+      - langgraph
+      - langchain-core
+      - langchain-openai
+      - langsmith
+      - pydub
+      - python-dotenv
+      - pydantic
