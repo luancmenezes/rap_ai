@@ -10,7 +10,7 @@ dependencies:
   - numpy
   - tiktoken
   - requests
-  - soundfile
+  - pysoundfile   # 👈 NOME CORRETO NO CONDA
 
   - pip
   - pip:

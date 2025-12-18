@@ -17,7 +17,7 @@ def escape_markdown_v2(text: str) -> str:
 
 def send_telegram_message(token: str, chat_id: str, text: str,
                           gif_path: str = None,
-                          use_markdown_v2: bool = True,
+                          use_markdown: bool = True,
                           disable_web_page_preview: bool = True,
                           timeout: int = 30):
     """
@@ -26,15 +26,15 @@ def send_telegram_message(token: str, chat_id: str, text: str,
     - chat_id: id do grupo/canal (ex: -100123...)
     - text: texto final (string)
     - gif_path: caminho local do gif (opcional)
-    - use_markdown_v2: se True, usa MarkdownV2 (escape automático). Se False, usa HTML.
+    - use_markdown: se True, usa MarkdownV2 (escape automático). Se False, usa HTML.
     """
 
     base = f"https://api.telegram.org/bot{token}"
 
     # prepare text according to parse mode
-    if use_markdown_v2:
-        parsed_text = escape_markdown_v2(text)
-        parse_mode = "MarkdownV2"
+    if use_markdown:
+        parsed_text = text
+        parse_mode = "Markdown"
     else:
         # se for HTML, não fazemos escaping automático — cuidado com tags
         parsed_text = text

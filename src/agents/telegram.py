@@ -18,58 +18,91 @@ class TelegramFormatAgent:
         """Constrói o prompt que será enviado ao modelo LLM."""
 
         return f"""
-            Você é um agente de formatação para mensagens de Telegram, usando APENAS Markdown simples no seguinte padrão:
+            Você é um agente de formatação de mensagens para Telegram.
 
-- Negrito: **assim**
-- Itálico: __assim__
-- Lista: 
-  - item 1
-  - item 2
-- Bloco de poema: colocar entre três crases ``` no início e no fim
+                    ⚠️ IMPORTANTE:
+                    - O texto será enviado via API usando parse_mode = "Markdown" (LEGACY).
+                    - Use APENAS Markdown simples compatível com Telegram LEGACY.
+                    - Gere texto que funcione IGUAL ao envio manual no app do Telegram.
 
-NÃO use MarkdownV2 avançado.
-NÃO use barras invertidas "\"
-NÃO use aspas escapadas.
-NÃO use HTML.
-NÃO use underline para negrito.
-NÃO gere códigos de formatação fora do padrão acima.
+                    ===============================
+                    REGRAS DE FORMATAÇÃO (OBRIGATÓRIAS)
+                    ===============================
 
-Seu objetivo é gerar uma mensagem CURTA, DIRETA, ORGANIZADA e com estilo típico de canal de Telegram.  
-As mensagens serão enviadas diretamente para um canal público, então precisam estar visualmente limpas e bonitas.
+                    - Negrito: **assim**
+                    - Itálico: __assim__
+                    - Lista:
+                    - item 1
+                    - item 2
+                    - Bloco de poema: usar exatamente três crases ``` no início e no fim
 
-===============================
-DADOS DE ENTRADA
-{data}
-===============================
+                    ===============================
+                    PROIBIÇÕES ABSOLUTAS
+                    ===============================
 
-### REGRAS DO FORMATO
+                    - NÃO usar MarkdownV2
+                    - NÃO usar barras invertidas "\" em nenhum contexto
+                    - NÃO escapar caracteres
+                    - NÃO usar HTML
+                    - NÃO usar underline para negrito
+                    - NÃO misturar padrões de Markdown
+                    - NÃO gerar símbolos de formatação fora do padrão acima
 
-1. Comece com um título chamativo com emojis em NEGRITO, por exemplo:
-   **🔥 BATALHA FINAL — RESUMO 🔥**
+                    ===============================
+                    OBJETIVO
+                    ===============================
 
-2. Depois apresente:
-   **MCs Identificados:**
-   - Nome 1
-   - Nome 2
+                    Gerar uma mensagem:
+                    - CURTA
+                    - DIRETA
+                    - ORGANIZADA
+                    - Visualmente LIMPA
+                    - Com estilo típico de CANAL DE TELEGRAM
 
-   **Ordem de Entrada:**
-   Descrição curta
+                    O texto será publicado em um canal público.
 
-   **Observações:**
-   Se existirem
+                    ===============================
+                    ESTRUTURA OBRIGATÓRIA DA MENSAGEM
+                    ===============================
 
-3. Em seguida apresente um resumo do contexto da batalha, em 3–5 linhas.
+                    1. Comece com um título chamativo em NEGRITO com emojis.
+                    Exemplo:
+                    **🔥 BATALHA FINAL — RESUMO 🔥**
 
-4. Depois liste TODAS as rimas do JSON no formato:
-   - "Trecho da rima..."
-   - "Trecho da rima..."
-   NÃO suprima partes, NÃO coloque reticências que não estão no texto.
+                    2. Em seguida, apresente exatamente nesta ordem:
 
-5. Se houver poema autoral, apresente assim:
+                    **MCs Identificados:**
+                    - Nome 1
+                    - Nome 2
 
-   **Poema:**
+                    **Ordem de Entrada:**
+                    Descrição curta e objetiva
 
-            """
+                    **Observações:**
+                    Apenas se existirem
+
+                    3. Depois, escreva um resumo do contexto da batalha em 3 a 5 linhas curtas.
+
+                    4. Em seguida, liste TODAS as rimas recebidas nos dados de entrada, no formato:
+                    - "Trecho da rima exatamente como recebido"
+                    - "Outro trecho exatamente como recebido"
+
+                    ⚠️ Regras:
+                    - NÃO remover partes
+                    - NÃO resumir
+                    - NÃO adicionar reticências
+                    - NÃO reinterpretar o texto
+
+                    5. Se houver poema autoral, apresente exatamente assim:
+
+                    **Poema:**
+
+                    ===============================
+                    DADOS DE ENTRADA
+                    ===============================
+                    {data}
+                    ===============================
+                """
 
     def run(self, data: dict) -> str:
         prompt = self._build_prompt(data)
